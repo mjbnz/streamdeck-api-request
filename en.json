@@ -1,0 +1,29 @@
+{
+  "Description": "REST Easily", 
+  "Name": "API Request", 
+  "com.github.mjbnz.sd-api-request": {
+    "Name": "API Request", 
+    "Tooltip": "Make an API Request"
+  },
+  
+  "Localization": {
+      "URL": "URL",
+      "Request Parameters": "Request Parameters",
+      "HTTP Method" : "HTTP Method",
+      "Content Type" : "Content Type",
+      "Request Headers" : "Request Headers",
+      "Request Body" : "Request Body",
+      "Advanced Settings": "Advanced Settings",
+      "Enable green success indicator": "Enable green success indicator",
+      "Set button image based on response": "Set button image based on response",
+      "JSON Path": "JSON Path",
+      "Expected Value": "Expected Value",
+      "Image to display when...": "Image to display when...",
+      "..matched": "..matched",
+      "..unmatched": "..unmatched",
+      "Periodically poll a URL for status": "Periodically poll a URL for status",
+      "Status URL": "Status URL",
+      "Poll Frequency": "Poll Frequency",
+      "Parse status response with different field and value": "Parse status response with different field and value"
+  }
+}

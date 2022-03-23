@@ -1,0 +1,31 @@
+{
+    "Actions": [
+        {
+            "Icon": "images/api_action",
+            "Name": "API Request",
+            "States": [
+                { "Image": "images/api_key" }
+            ],
+            "Tooltip": "Make an API Request",
+            "UUID": "com.github.mjbnz.sd-api-request"
+        }
+    ],
+    "SDKVersion": 2,
+    "Author": "mjbnz",
+    "CodePath": "index.html",
+    "PropertyInspectorPath": "propertyinspector/index.html",
+    "Description": "REST Easily",
+    "Name": "API Request",
+    "Icon": "images/api_action",
+    "Category": "API Request",
+    "CategoryIcon": "images/api_action",  
+    "URL": "https://github.com/mjbnz/sd-api-request/",
+    "Version": "0.1",
+    "OS": [
+        { "Platform": "mac",     "MinimumVersion": "10.11" },
+        { "Platform": "windows", "MinimumVersion": "10"    }
+    ],
+    "Software": {
+        "MinimumVersion": "4.1"
+    }
+}
