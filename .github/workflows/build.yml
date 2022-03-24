@@ -1,0 +1,57 @@
+name: Build StreamDeck plugin
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release-export:
+    runs-on: windows-latest
+
+    steps:
+      # Check-out repository under $GITHUB_WORKSPACE
+      - uses: actions/checkout@v2
+
+      - name: Prepare directories and files
+        run: |
+          mkdir release
+          move Sources com.github.mjbnz.sd-api-request.sdPlugin
+          move LICENCE com.github.mjbnz.sd-api-request.sdPlugin\LICENCE
+
+      # Build StreamDeck plugin
+      - name: StreamDeck Distribution Tool
+        uses: AdamCarballo/streamdeck-distribution-tool@v1
+        with:
+          input: com.github.mjbnz.sd-api-request.sdPlugin
+          output: release
+
+      # Create Release
+      - name: Create draft release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref_name }} - Automated Release
+          draft: true
+          prerelease: false
+
+      - name: Upload draft release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release\com.github.mjbnz.sd-api-request.streamDeckPlugin
+          asset_name: com.github.mjbnz.sd-api-request.streamDeckPlugin
+          asset_content_type: application/zip
+
+      - name: Publish draft release
+        if: ${{ startsWith(github.ref_name, 'v') }}
+        uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create_release.outputs.id }}
