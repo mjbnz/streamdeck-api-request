@@ -24,6 +24,6 @@
       "Periodically poll a URL for status": "Periodically poll a URL for status",
       "Status URL": "Status URL",
       "Poll Frequency": "Poll Frequency",
-      "Parse status response with different field and value": "Parse status response with different field and value"
+      "Parse different field and value from status response": "Parse different field and value from status response"
   }
 }
