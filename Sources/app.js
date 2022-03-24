@@ -103,7 +103,7 @@ function APIRequest(jsonObj) {
         }
 
         let url    = do_status_poll ? settings.poll_status_url : settings.request_url;
-        let method = settings.request_method || 'GET';
+        let method = (do_status_poll ? settings.poll_status_method : settings.request_method) || 'GET';
 
         const opts = {
             cache: 'no-cache',

@@ -118,6 +118,17 @@
                     <input class="sdpi-item-value" type="text" id="poll_status_url">
                 </div>
                 <div class="sdpi-item">
+                    <div class="sdpi-item-label">HTTP Method</div>
+                    <select class="sdpi-item-value select" id="poll_status_method">
+                        <option value="GET" selected>GET</option>
+                        <option value="POST">POST</option>
+                        <option value="HEAD">HEAD</option>
+                        <option value="PUT">PUT</option>
+                        <option value="PATCH">PATCH</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                </div>        
+                <div class="sdpi-item">
                     <div class="sdpi-item-label">Poll Frequency</div>
                     <input class="sdpi-item-value max10" type="text" id="poll_status_frequency" pattern="\d+" value="15"> seconds
                 </div>
