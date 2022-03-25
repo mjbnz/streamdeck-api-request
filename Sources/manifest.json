@@ -20,7 +20,7 @@
     "Category": "API Request",
     "CategoryIcon": "images/api_action",  
     "URL": "https://github.com/mjbnz/sd-api-request/",
-    "Version": "0.1",
+    "Version": "0.2",
     "OS": [
         { "Platform": "mac",     "MinimumVersion": "10.11" },
         { "Platform": "windows", "MinimumVersion": "10"    }
