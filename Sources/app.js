@@ -16,6 +16,9 @@ function connected(jsn) {
     $SD.on('com.github.mjbnz.sd-api-request.keyUp', jsonObj =>
         action.onKeyUp(jsonObj)
     );
+    $SD.on('com.github.mjbnz.sd-api-request.keyDown', jsonObj =>
+        action.onKeyDown(jsonObj)
+    );
 }
 
 var action = {
@@ -53,7 +56,6 @@ var action = {
             api_request.destroy();
             delete this.cache[jsn.context];
         }
-
     },
 
     onKeyUp: function(jsn) {
@@ -65,11 +67,24 @@ var action = {
             this.onWillAppear(jsn);
         else
             api_request.sendRequest();
+    },
 
-    }
+    onKeyDown: function (jsn) {
+        log('onKeyDown(): ', jsn);
 
+        const api_request = this.cache[jsn.context];
+
+        if(!api_request)
+            this.onWillAppear(jsn);
+        else
+            api_request.sendRequest(false, KEY_TYPES.DOWN);
+    },
 };
 
+const KEY_TYPES = {
+    DOWN: 'DOWN',
+    UP: 'UP',
+};
 
 function APIRequest(jsonObj) {
     var settings = jsonObj.payload.settings,
@@ -91,8 +106,37 @@ function APIRequest(jsonObj) {
         }, 1000 * frequency);
     }
 
-    function sendRequest(do_status_poll = false) {
-        if (!settings.request_url) {
+    function getSettingsFromKeyType(key_type = KEY_TYPES.UP) {
+        switch (key_type) {
+            case KEY_TYPES.UP:
+                return {
+                    request_url: settings.request_url_keyup,
+                    request_method: settings.request_method_keyup,
+                    request_body: settings.request_body_keyup,
+                    request_content_type: settings.request_content_type_keyup,
+                    request_headers: settings.request_headers_keyup,
+                };
+            default:
+                return {
+                    request_url: settings.request_url_key_down,
+                    request_method: settings.request_method_key_down,
+                    request_body: settings.request_body_key_down,
+                    request_content_type: settings.request_content_type_key_down,
+                    request_headers: settings.request_headers_key_down,
+                };
+        }
+    }
+
+    function sendRequest(do_status_poll = false, key_type = KEY_TYPES.UP) {
+        const {
+            request_url,
+            request_method,
+            request_body,
+            request_content_type,
+            request_headers,
+        } = getSettingsFromKeyType(key_type);
+
+        if (!request_url) {
             $SD.api.showAlert(context);
             return;
         }
@@ -102,16 +146,19 @@ function APIRequest(jsonObj) {
             if (!settings.poll_status_url) return;
         }
 
-        let url    = do_status_poll ? settings.poll_status_url : settings.request_url;
-        let method = (do_status_poll ? settings.poll_status_method : settings.request_method) || 'GET';
+        let url = do_status_poll ? settings.poll_status_url : request_url;
+        let method =
+            (do_status_poll ? settings.poll_status_method : request_method) ||
+            'GET';
 
         const opts = {
             cache: 'no-cache',
-            headers: constructHeaders(),
+            headers: constructHeaders({
+                request_content_type,
+                request_headers,
+            }),
             method: method,
-            body: ['GET', 'HEAD'].includes(method)
-                                    ? undefined
-                                    : settings.request_body,
+            body: ['GET', 'HEAD'].includes(method) ? undefined : request_body,
         };
 
         log('sendRequest(): URL:', url, 'ARGS:', opts);
@@ -130,14 +177,14 @@ function APIRequest(jsonObj) {
             startPeriodicPoll();
     }
 
-    function constructHeaders() {
-        let default_headers = settings.request_content_type
-                                ? { 'Content-Type': settings.request_content_type }
-                                : {};
+    function constructHeaders({ request_content_type, request_headers }) {
+        let default_headers = request_content_type
+            ? { 'Content-Type': request_content_type }
+            : {};
         let input_headers = {};
 
-        if (settings.request_headers) {
-            settings.request_headers.split(/\n/).forEach(h => {
+        if (request_headers) {
+            request_headers.split(/\n/).forEach((h) => {
                 if (h.includes(':')) {
                     const [name, value] = h.split(/: *(.*)/).map(s => {
                         return s.trim();

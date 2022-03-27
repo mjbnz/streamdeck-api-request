@@ -10,48 +10,116 @@
 
 <body>
     <div class="sdpi-wrapper hidden">
-        <div class="sdpi-item">
-            <div class="sdpi-item-label">URL</div>
-            <input class="sdpi-item-value" type="text" id="request_url" required>
+        <div id="request_types">
+            <div class="sdpi-heading">Choose when to send request</div>
+            <div class="sdpi-item">
+                <div class="sdpi-item-value">
+                    <div class="sdpi-item-child">
+                        <input id="request_type_keyup" type="checkbox">
+                        <label for="request_type_keyup" class="sdpi-item-label"><span></span>Send request on <strong>key up</strong></label>
+                    </div>
+                </div>
+            </div>
+            <div class="sdpi-item">
+                <div class="sdpi-item-value">
+                    <div class="sdpi-item-child">
+                        <input id="request_type_key_down" type="checkbox">
+                        <label for="request_type_key_down" class="sdpi-item-label"><span></span>Send request on <strong>key down</strong></label>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="sdpi-heading">Request Parameters</div>
+        <div id="key_up_request_parameters" style="display: none;">
+            <div class="sdpi-heading">KeyUp Request Parameters</div>
 
-        <div class="sdpi-item">
-            <div class="sdpi-item-label">HTTP Method</div>
-            <select class="sdpi-item-value select" id="request_method">
-                <option value="GET" selected>GET</option>
-                <option value="POST">POST</option>
-                <option value="HEAD">HEAD</option>
-                <option value="PUT">PUT</option>
-                <option value="PATCH">PATCH</option>
-                <option value="DELETE">DELETE</option>
-            </select>
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">URL</div>
+                <input class="sdpi-item-value" type="text" id="request_url_keyup" required>
+            </div>
+
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">HTTP Method</div>
+                <select class="sdpi-item-value select" id="request_method_keyup">
+                    <option value="GET" selected>GET</option>
+                    <option value="POST">POST</option>
+                    <option value="HEAD">HEAD</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">Content Type</div>
+                <select class="sdpi-item-value select" id="request_content_type_keyup">
+                    <option value="" selected>&lt;none&gt;</option>
+                    <option value="application/json">application/json</option>
+                    <option value="application/xml">application/xml</option>
+                    <option value="text/plain">text/plain</option>
+                    <option value="text/html">text/html</option>
+                </select>
+            </div>
+
+            <div type="textarea" class="sdpi-item alignTop">
+                <div class="sdpi-item-label">Request Headers</div>
+                <span class="sdpi-item-value textarea">
+                    <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_headers_keyup" placeholder="Authorization: Bearer [token]"></textarea>
+                </span>
+            </div>
+
+            <div type="textarea" class="sdpi-item alignTop">
+                <div class="sdpi-item-label">Request Body</div>
+                <span class="sdpi-item-value textarea">
+                    <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_body_keyup"></textarea>
+                </span>
+            </div>
         </div>
 
-        <div class="sdpi-item">
-            <div class="sdpi-item-label">Content Type</div>
-            <select class="sdpi-item-value select" id="request_content_type">
-                <option value="" selected>&lt;none&gt;</option>
-                <option value="application/json">application/json</option>
-                <option value="application/xml">application/xml</option>
-                <option value="text/plain">text/plain</option>
-                <option value="text/html">text/html</option>
-            </select>
-        </div>
+        <div id="key_down_request_parameters" style="display: none;">
+            <div class="sdpi-heading">KeyDown Request Parameters</div>
 
-        <div type="textarea" class="sdpi-item alignTop">
-            <div class="sdpi-item-label">Request Headers</div>
-            <span class="sdpi-item-value textarea">
-                <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_headers" placeholder="Authorization: Bearer [token]"></textarea>
-            </span>
-        </div>
-
-        <div type="textarea" class="sdpi-item alignTop">
-            <div class="sdpi-item-label">Request Body</div>
-            <span class="sdpi-item-value textarea">
-                <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_body"></textarea>
-            </span>
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">URL</div>
+                <input class="sdpi-item-value" type="text" id="request_url_key_down" required>
+            </div>
+            
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">HTTP Method</div>
+                <select class="sdpi-item-value select" id="request_method_key_down">
+                    <option value="GET" selected>GET</option>
+                    <option value="POST">POST</option>
+                    <option value="HEAD">HEAD</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+            
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">Content Type</div>
+                <select class="sdpi-item-value select" id="request_content_type_key_down">
+                    <option value="" selected>&lt;none&gt;</option>
+                    <option value="application/json">application/json</option>
+                    <option value="application/xml">application/xml</option>
+                    <option value="text/plain">text/plain</option>
+                    <option value="text/html">text/html</option>
+                </select>
+            </div>
+            
+            <div type="textarea" class="sdpi-item alignTop">
+                <div class="sdpi-item-label">Request Headers</div>
+                <span class="sdpi-item-value textarea">
+                    <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_headers_key_down" placeholder="Authorization: Bearer [token]"></textarea>
+                </span>
+            </div>
+            
+            <div type="textarea" class="sdpi-item alignTop">
+                <div class="sdpi-item-label">Request Body</div>
+                <span class="sdpi-item-value textarea">
+                    <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_body_key_down"></textarea>
+                </span>
+            </div>
         </div>
 
         <div class="sdpi-heading">Advanced Settings</div>
