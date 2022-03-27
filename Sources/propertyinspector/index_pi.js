@@ -344,6 +344,12 @@ function showHideSettings() {
 
     d = document.getElementById('poll_status_parse_settings');
     d.style.display = settings.poll_status_parse ? "" : "none";
+
+    d = document.getElementById('key_up_request_parameters');
+    d.style.display = settings.request_type_keyup ? "" : "none";
+
+    d = document.getElementById('key_down_request_parameters');
+    d.style.display = settings.request_type_key_down ? "" : "none";
 }
 
 function localize(s) {
