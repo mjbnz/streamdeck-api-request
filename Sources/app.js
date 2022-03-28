@@ -28,11 +28,10 @@ var action = {
         const settings = jsn.payload.settings;
         const api_request = this.cache[jsn.context];
 
-        if(!settings || !api_request) return;
+        if (!settings || !api_request) return;
 
         api_request.updateSettings(settings);
         this.cache[jsn.context] = api_request;
-
     },
 
     onWillAppear: function(jsn) {
@@ -53,7 +52,6 @@ var action = {
             api_request.destroy();
             delete this.cache[jsn.context];
         }
-
     },
 
     onKeyUp: function(jsn) {
@@ -61,11 +59,10 @@ var action = {
 
         const api_request = this.cache[jsn.context];
 
-        if(!api_request)
+        if (!api_request)
             this.onWillAppear(jsn);
         else
             api_request.sendRequest();
-
     }
 
 };
@@ -221,7 +218,7 @@ function APIRequest(jsonObj) {
     }
 
     function destroy() {
-        if(poll_timer !== 0) {
+        if (poll_timer !== 0) {
             window.clearInterval(poll_timer);
             poll_timer = 0;
         }
