@@ -77,14 +77,12 @@ function APIRequest(jsonObj) {
         poll_timer = 0,
         key_state = null;
 
-    function startPeriodicPoll() {
-
-        if(poll_timer !== 0) {
-            window.clearInterval(poll_timer);
-            poll_timer = 0;
-        }
-
+    function restartPeriodicPoll() {
         const frequency = settings.poll_status_frequency || 15;
+
+        destroy();
+
+        sendRequest(do_status_poll = true);
 
         poll_timer = setInterval(function() {
             sendRequest(do_status_poll = true);
@@ -219,8 +217,7 @@ function APIRequest(jsonObj) {
 
     function updateSettings(new_settings) {
         settings = new_settings;
-        startPeriodicPoll();
-        sendRequest(do_status_poll = true);
+        restartPeriodicPoll();
     }
 
     function destroy() {
@@ -230,8 +227,7 @@ function APIRequest(jsonObj) {
         }
     }
 
-    startPeriodicPoll();
-    sendRequest(do_status_poll = true);
+    restartPeriodicPoll();
 
     return {
         sendRequest: sendRequest,
