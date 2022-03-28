@@ -105,8 +105,8 @@ function APIRequest(jsonObj) {
         if (settings.advanced_settings) {
             if (do_status_poll) url = settings.poll_status_url;
             if (settings.request_parameters) {
-                body = settings.request_body;
-                method = do_status_poll ? settings.poll_status_method : settings.request_method;
+                body   = settings.request_body;
+                method = (do_status_poll ? settings.poll_status_method : settings.request_method) ?? method;
             }
         }
 
