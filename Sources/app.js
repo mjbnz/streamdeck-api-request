@@ -103,7 +103,10 @@ function APIRequest(jsonObj) {
         }
 
         let url    = do_status_poll ? settings.poll_status_url : settings.request_url;
-        let method = (do_status_poll ? settings.poll_status_method : settings.request_method) || 'GET';
+        let body   = settings.request_parameters ? settings.request_body : undefined;
+        let method = settings.request_parameters
+                       ? (do_status_poll ? settings.poll_status_method : settings.request_method)
+                       : 'GET';
 
         const opts = {
             cache: 'no-cache',
@@ -111,7 +114,7 @@ function APIRequest(jsonObj) {
             method: method,
             body: ['GET', 'HEAD'].includes(method)
                                     ? undefined
-                                    : settings.request_body,
+                                    : body,
         };
 
         log('sendRequest(): URL:', url, 'ARGS:', opts);
@@ -131,6 +134,8 @@ function APIRequest(jsonObj) {
     }
 
     function constructHeaders() {
+        if (!settings.request_parameters) return {};
+
         let default_headers = settings.request_content_type
                                 ? { 'Content-Type': settings.request_content_type }
                                 : {};
