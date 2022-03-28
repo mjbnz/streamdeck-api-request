@@ -93,7 +93,7 @@ function APIRequest(jsonObj) {
 
     function sendRequest(do_status_poll = false) {
         if (!settings.request_url) {
-            $SD.api.showAlert(context);
+            if (!do_status_poll) $SD.api.showAlert(context);
             return;
         }
 
