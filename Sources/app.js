@@ -226,6 +226,15 @@ function APIRequest(jsonObj) {
         }
     }
 
+    // Temporary tweak to not break existing user configs after creating 'advanced_settings' boolean
+    // If the settings hash has more than one key, and it has a request_url, it's got other settings, so set it to true.
+    if (!settings.hasOwnProperty('advanced_settings') && settings.hasOwnProperty('request_url') && (Object.keys(settings).length > 1)) {
+        log('enabling advanced settings');
+        settings.advanced_settings = true;
+        $SD.api.setSettings(context, settings);
+    }
+    // End temporary tweak
+
     restartPeriodicPoll();
 
     return {
