@@ -336,6 +336,9 @@ function autoGrow(el) {
 
 function showHideSettings() {
     var d;
+    d = document.getElementById('advanced_settings_container');
+    d.style.display = settings.advanced_settings ? "" : "none";
+
     d = document.getElementById('request_parameters_container');
     d.style.display = settings.request_parameters ? "" : "none";
 

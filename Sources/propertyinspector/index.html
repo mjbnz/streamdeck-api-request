@@ -15,117 +15,38 @@
             <input class="sdpi-item-value" type="text" id="request_url" required>
         </div>
 
-        <div class="sdpi-heading">Advanced Settings</div>
-
         <div class="sdpi-item">
             <div class="sdpi-item-value">
                 <div class="sdpi-item-child">
-                    <input id="enable_success_indicator" type="checkbox">
-                    <label for="enable_success_indicator" class="sdpi-item-label"><span></span>Enable green success indicator</label>
+                    <input id="advanced_settings" type="checkbox">
+                    <label for="advanced_settings" class="sdpi-item-label"><span></span>Enable Advanced Settings</label>
                 </div>
             </div>
         </div>
+        <div id="advanced_settings_container" style="display:none">
+            <div class="sdpi-heading">Advanced Settings</div>
 
-        <div class="sdpi-item">
-            <div class="sdpi-item-value">
-                <div class="sdpi-item-child">
-                    <input id="request_parameters" type="checkbox">
-                    <label for="request_parameters" class="sdpi-item-label"><span></span>Specify request parameters</label>
-                </div>
-            </div>
-        </div>
-        <div id="request_parameters_container" style="display:none">
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">HTTP Method</div>
-                <select class="sdpi-item-value select" id="request_method">
-                    <option value="GET" selected>GET</option>
-                    <option value="POST">POST</option>
-                    <option value="HEAD">HEAD</option>
-                    <option value="PUT">PUT</option>
-                    <option value="PATCH">PATCH</option>
-                    <option value="DELETE">DELETE</option>
-                </select>
-            </div>
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">Content Type</div>
-                <select class="sdpi-item-value select" id="request_content_type">
-                    <option value="" selected>&lt;none&gt;</option>
-                    <option value="application/json">application/json</option>
-                    <option value="application/xml">application/xml</option>
-                    <option value="text/plain">text/plain</option>
-                    <option value="text/html">text/html</option>
-                </select>
-            </div>
-            <div type="textarea" class="sdpi-item alignTop">
-                <div class="sdpi-item-label">Request Headers</div>
-                <span class="sdpi-item-value textarea">
-                    <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_headers" placeholder="Authorization: Bearer [token]"></textarea>
-                </span>
-            </div>
-            <div type="textarea" class="sdpi-item alignTop">
-                <div class="sdpi-item-label">Request Body</div>
-                <span class="sdpi-item-value textarea">
-                    <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_body"></textarea>
-                </span>
-            </div>
-        </div>
-
-        <div class="sdpi-item">
-            <div class="sdpi-item-value">
-                <div class="sdpi-item-child">
-                    <input id="response_parse" type="checkbox">
-                    <label for="response_parse" class="sdpi-item-label"><span></span>Set button image based on response</label>
-                </div>
-            </div>
-        </div>
-        <div id="response_parse_container" style="display:none">
-            <details>
-                <summary>Expand for Response parsing instructions</summary>
-                <p>Specify the JSON path and expected value in the API response to choose which image to show on the key.</p>
-                <p>A missing path will search for the expected value as a string anywhere in the response body.</p>
-                <p>A missing expected value will treat the field at the JSON path as a Boolean, where <code>true</code> is considered "matched".</p>
-            </details>
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">JSON Path</div>
-                <input class="sdpi-item-value" type="text" id="response_parse_field">
-            </div>
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">Expected Value</div>
-                <input class="sdpi-item-value" type="text" id="response_parse_value">
-            </div>
-            <div class="sdpi-item">Image to display when...</div>
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">..matched</div>
-                <div class="sdpi-item-group file" id="matchedfilepickergroup">
-                    <input class="sdpi-item-value" type="file" id="image_matched" accept=".jpg, .jpeg, .png, .ico, .gif, .bmp, .tiff">
-                    <label class="sdpi-file-info " for="image_matched">No file...</label>
-                    <label class="sdpi-file-label" for="image_matched">Choose file...</label>
-                </div>
-            </div>
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">..unmatched</div>
-                <div class="sdpi-item-group file" id="unmatchedfilepickergroup">
-                    <input class="sdpi-item-value" type="file" id="image_unmatched" accept=".jpg, .jpeg, .png, .ico, .gif, .bmp, .tiff">
-                    <label class="sdpi-file-info " for="image_unmatched">No file...</label>
-                    <label class="sdpi-file-label" for="image_unmatched">Choose file...</label>
-                </div>
-            </div>
             <div class="sdpi-item">
                 <div class="sdpi-item-value">
                     <div class="sdpi-item-child">
-                        <input id="poll_status"  type="checkbox">
-                        <label for="poll_status" class="sdpi-item-label"><span></span>Periodically poll a URL for status</label>
+                        <input id="enable_success_indicator" type="checkbox">
+                        <label for="enable_success_indicator" class="sdpi-item-label"><span></span>Enable green success indicator</label>
                     </div>
                 </div>
             </div>
-            <div id="poll_status_container" style="display:none">
-                <div class="sdpi-item">
-                    <div class="sdpi-item-label">Status URL</div>
-                    <input class="sdpi-item-value" type="text" id="poll_status_url">
+
+            <div class="sdpi-item">
+                <div class="sdpi-item-value">
+                    <div class="sdpi-item-child">
+                        <input id="request_parameters" type="checkbox">
+                        <label for="request_parameters" class="sdpi-item-label"><span></span>Specify request parameters</label>
+                    </div>
                 </div>
+            </div>
+            <div id="request_parameters_container" style="display:none">
                 <div class="sdpi-item">
                     <div class="sdpi-item-label">HTTP Method</div>
-                    <select class="sdpi-item-value select" id="poll_status_method">
+                    <select class="sdpi-item-value select" id="request_method">
                         <option value="GET" selected>GET</option>
                         <option value="POST">POST</option>
                         <option value="HEAD">HEAD</option>
@@ -133,29 +54,118 @@
                         <option value="PATCH">PATCH</option>
                         <option value="DELETE">DELETE</option>
                     </select>
-                </div>        
+                </div>
                 <div class="sdpi-item">
-                    <div class="sdpi-item-label">Poll Frequency</div>
-                    <input class="sdpi-item-value max10" type="text" id="poll_status_frequency" pattern="\d+" value="15"> seconds
+                    <div class="sdpi-item-label">Content Type</div>
+                    <select class="sdpi-item-value select" id="request_content_type">
+                        <option value="" selected>&lt;none&gt;</option>
+                        <option value="application/json">application/json</option>
+                        <option value="application/xml">application/xml</option>
+                        <option value="text/plain">text/plain</option>
+                        <option value="text/html">text/html</option>
+                    </select>
+                </div>
+                <div type="textarea" class="sdpi-item alignTop">
+                    <div class="sdpi-item-label">Request Headers</div>
+                    <span class="sdpi-item-value textarea">
+                        <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_headers" placeholder="Authorization: Bearer [token]"></textarea>
+                    </span>
+                </div>
+                <div type="textarea" class="sdpi-item alignTop">
+                    <div class="sdpi-item-label">Request Body</div>
+                    <span class="sdpi-item-value textarea">
+                        <textarea type="textarea" class="autosize" oninput="autoGrow(this)" id="request_body"></textarea>
+                    </span>
+                </div>
+            </div>
+
+            <div class="sdpi-item">
+                <div class="sdpi-item-value">
+                    <div class="sdpi-item-child">
+                        <input id="response_parse" type="checkbox">
+                        <label for="response_parse" class="sdpi-item-label"><span></span>Set button image based on response</label>
+                    </div>
+                </div>
+            </div>
+            <div id="response_parse_container" style="display:none">
+                <details>
+                    <summary>Expand for Response parsing instructions</summary>
+                    <p>Specify the JSON path and expected value in the API response to choose which image to show on the key.</p>
+                    <p>A missing path will search for the expected value as a string anywhere in the response body.</p>
+                    <p>A missing expected value will treat the field at the JSON path as a Boolean, where <code>true</code> is considered "matched".</p>
+                </details>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label">JSON Path</div>
+                    <input class="sdpi-item-value" type="text" id="response_parse_field">
+                </div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label">Expected Value</div>
+                    <input class="sdpi-item-value" type="text" id="response_parse_value">
+                </div>
+                <div class="sdpi-item">Image to display when...</div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label">..matched</div>
+                    <div class="sdpi-item-group file" id="matchedfilepickergroup">
+                        <input class="sdpi-item-value" type="file" id="image_matched" accept=".jpg, .jpeg, .png, .ico, .gif, .bmp, .tiff">
+                        <label class="sdpi-file-info " for="image_matched">No file...</label>
+                        <label class="sdpi-file-label" for="image_matched">Choose file...</label>
+                    </div>
+                </div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label">..unmatched</div>
+                    <div class="sdpi-item-group file" id="unmatchedfilepickergroup">
+                        <input class="sdpi-item-value" type="file" id="image_unmatched" accept=".jpg, .jpeg, .png, .ico, .gif, .bmp, .tiff">
+                        <label class="sdpi-file-info " for="image_unmatched">No file...</label>
+                        <label class="sdpi-file-label" for="image_unmatched">Choose file...</label>
+                    </div>
                 </div>
                 <div class="sdpi-item">
                     <div class="sdpi-item-value">
                         <div class="sdpi-item-child">
-                            <input id="poll_status_parse" type="checkbox">
-                            <label for="poll_status_parse" class="sdpi-item-label"><span></span>Parse different field and value from status response</label>
+                            <input id="poll_status"  type="checkbox">
+                            <label for="poll_status" class="sdpi-item-label"><span></span>Periodically poll a URL for status</label>
                         </div>
                     </div>
                 </div>
-                <div id="poll_status_parse_container" style="display:none">
+                <div id="poll_status_container" style="display:none">
                     <div class="sdpi-item">
-                        <div class="sdpi-item-label">JSON Path</div>
-                        <input class="sdpi-item-value" type="text" id="poll_status_parse_field">
+                        <div class="sdpi-item-label">Status URL</div>
+                        <input class="sdpi-item-value" type="text" id="poll_status_url">
                     </div>
                     <div class="sdpi-item">
-                        <div class="sdpi-item-label">Expected Value</div>
-                        <input class="sdpi-item-value" type="text" id="poll_status_parse_value">
+                        <div class="sdpi-item-label">HTTP Method</div>
+                        <select class="sdpi-item-value select" id="poll_status_method">
+                            <option value="GET" selected>GET</option>
+                            <option value="POST">POST</option>
+                            <option value="HEAD">HEAD</option>
+                            <option value="PUT">PUT</option>
+                            <option value="PATCH">PATCH</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
                     </div>
-                </div>        
+                    <div class="sdpi-item">
+                        <div class="sdpi-item-label">Poll Frequency</div>
+                        <input class="sdpi-item-value max10" type="text" id="poll_status_frequency" pattern="\d+" value="15"> seconds
+                    </div>
+                    <div class="sdpi-item">
+                        <div class="sdpi-item-value">
+                            <div class="sdpi-item-child">
+                                <input id="poll_status_parse" type="checkbox">
+                                <label for="poll_status_parse" class="sdpi-item-label"><span></span>Parse different field and value from status response</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="poll_status_parse_container" style="display:none">
+                        <div class="sdpi-item">
+                            <div class="sdpi-item-label">JSON Path</div>
+                            <input class="sdpi-item-value" type="text" id="poll_status_parse_field">
+                        </div>
+                        <div class="sdpi-item">
+                            <div class="sdpi-item-label">Expected Value</div>
+                            <input class="sdpi-item-value" type="text" id="poll_status_parse_value">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

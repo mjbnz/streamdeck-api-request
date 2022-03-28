@@ -102,11 +102,16 @@ function APIRequest(jsonObj) {
             if (!settings.poll_status_url) return;
         }
 
-        let url    = do_status_poll ? settings.poll_status_url : settings.request_url;
-        let body   = settings.request_parameters ? settings.request_body : undefined;
-        let method = settings.request_parameters
-                       ? (do_status_poll ? settings.poll_status_method : settings.request_method)
-                       : 'GET';
+        let url    = settings.request_url;
+        let body   = undefined;
+        let method = 'GET';
+        if (settings.advanced_settings) {
+            if (do_status_poll) url = settings.poll_status_url;
+            if (settings.request_parameters) {
+                body = settings.request_body;
+                method = do_status_poll ? settings.poll_status_method : settings.request_method;
+            }
+        }
 
         const opts = {
             cache: 'no-cache',
@@ -134,7 +139,7 @@ function APIRequest(jsonObj) {
     }
 
     function constructHeaders() {
-        if (!settings.request_parameters) return {};
+        if (!settings.advanced_settings || !settings.request_parameters) return {};
 
         let default_headers = settings.request_content_type
                                 ? { 'Content-Type': settings.request_content_type }
@@ -172,7 +177,7 @@ function APIRequest(jsonObj) {
     }
 
     async function updateImage(resp, do_status_poll) {
-        if (!settings.response_parse || !settings.image_matched || !settings.image_unmatched)
+        if (!settings.advanced_settings || !settings.response_parse || !settings.image_matched || !settings.image_unmatched)
             return;
 
         let json, body;
@@ -209,7 +214,7 @@ function APIRequest(jsonObj) {
     }
 
     function showSuccess(resp, do_status_poll) {
-        if (!do_status_poll && Boolean(settings.enable_success_indicator))
+        if (settings.advanced_settings && !do_status_poll && Boolean(settings.enable_success_indicator))
             $SD.api.showOk(context)
         return resp;
     }
