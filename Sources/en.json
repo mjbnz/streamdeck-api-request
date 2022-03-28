@@ -8,13 +8,14 @@
   
   "Localization": {
       "URL": "URL",
-      "Request Parameters": "Request Parameters",
+      "Enable Advanced Settings": "Enable Advanced Settings",
+      "Advanced Settings": "Advanced Settings",
+      "Enable green success indicator": "Enable green success indicator",
+      "Specify request parameters": "Specify request parameters",
       "HTTP Method" : "HTTP Method",
       "Content Type" : "Content Type",
       "Request Headers" : "Request Headers",
       "Request Body" : "Request Body",
-      "Advanced Settings": "Advanced Settings",
-      "Enable green success indicator": "Enable green success indicator",
       "Set button image based on response": "Set button image based on response",
       "JSON Path": "JSON Path",
       "Expected Value": "Expected Value",
@@ -24,6 +25,6 @@
       "Periodically poll a URL for status": "Periodically poll a URL for status",
       "Status URL": "Status URL",
       "Poll Frequency": "Poll Frequency",
-      "Parse different field and value from status response": "Parse different field and value from status response"
+      "Parse a different field and value from response": "Parse a different field and value from response"
   }
 }
