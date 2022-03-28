@@ -79,11 +79,13 @@ function APIRequest(jsonObj) {
 
         destroy();
 
-        sendRequest(do_status_poll = true);
-
-        poll_timer = setInterval(function() {
+        if (settings.advanced_settings && settings.poll_status) {
             sendRequest(do_status_poll = true);
-        }, 1000 * frequency);
+
+            poll_timer = setInterval(function() {
+                sendRequest(do_status_poll = true);
+            }, 1000 * frequency);
+        }
     }
 
     function sendRequest(do_status_poll = false) {
