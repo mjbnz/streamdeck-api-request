@@ -336,13 +336,13 @@ function autoGrow(el) {
 
 function showHideSettings() {
     var d;
-    d = document.getElementById('response_parse_settings');
+    d = document.getElementById('response_parse_container');
     d.style.display = settings.response_parse ? "" : "none";
 
-    d = document.getElementById('poll_status_settings');
+    d = document.getElementById('poll_status_container');
     d.style.display = settings.poll_status ? "" : "none";
 
-    d = document.getElementById('poll_status_parse_settings');
+    d = document.getElementById('poll_status_parse_container');
     d.style.display = settings.poll_status_parse ? "" : "none";
 }
 
