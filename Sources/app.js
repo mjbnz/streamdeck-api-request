@@ -134,8 +134,6 @@ function APIRequest(jsonObj) {
             }
         );
 
-        if (!do_status_poll)
-            startPeriodicPoll();
     }
 
     function constructHeaders() {
