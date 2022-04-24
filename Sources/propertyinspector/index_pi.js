@@ -342,6 +342,9 @@ function showHideSettings() {
     d = document.getElementById('request_parameters_container');
     d.style.display = settings.request_parameters ? "" : "none";
 
+    d = document.getElementById('response_data_container');
+    d.style.display = settings.response_data ? "" : "none";
+
     d = document.getElementById('response_parse_container');
     d.style.display = settings.response_parse ? "" : "none";
 
