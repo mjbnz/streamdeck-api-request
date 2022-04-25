@@ -79,7 +79,7 @@ function APIRequest(jsonObj) {
 
         destroy();
 
-        if (settings.advanced_settings && settings.poll_status) {
+        if (settings.advanced_settings && (settings.poll_status || settings.poll_status_data)) {
             sendRequest(do_status_poll = true);
 
             poll_timer = setInterval(function() {
@@ -95,18 +95,22 @@ function APIRequest(jsonObj) {
         }
 
         if (do_status_poll) {
-            if (!Boolean(settings.response_parse) || !Boolean(settings.poll_status)) return;
-            if (!settings.poll_status_url) return;
+            // We check the parent-child relationship between settings to skip early when not needed
+            //    (left-side: parsing for background && right-side: parsing for displaying data)
+            if (!Boolean(settings.response_parse) && !Boolean(settings.response_data)) return;
+            if (!Boolean(settings.poll_status)    && !Boolean(settings.poll_status_data)) return;
+            if (!settings.poll_status_url         && !settings.poll_status_data_url) return;
         }
 
         let url    = settings.request_url;
         let body   = undefined;
         let method = 'GET';
         if (settings.advanced_settings) {
-            if (do_status_poll) url = settings.poll_status_url;
+            if (do_status_poll) url = settings.poll_status_url ?? settings.poll_status_data_url;
             if (settings.request_parameters) {
-                body   = settings.request_body;
-                method = (do_status_poll ? settings.poll_status_method : settings.request_method) ?? method;
+                body        = settings.request_body;
+                poll_method = settings.poll_status_method ?? settings.poll_status_data_method;
+                method      = (do_status_poll ? poll_method : settings.request_method) ?? method;
             }
         }
 

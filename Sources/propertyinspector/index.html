@@ -120,6 +120,55 @@
                     <div class="sdpi-item-label">Unit</div>
                     <input class="sdpi-item-value" type="text" id="response_data_unit">
                 </div>
+                <div class="sdpi-item">
+                    <div style="width: 15px;"></div>
+                    <div class="sdpi-item-value">
+                        <div class="sdpi-item-child">
+                            <input id="poll_status"  type="checkbox">
+                            <label for="poll_status" class="sdpi-item-label"><span></span>Periodically poll a URL for status</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="poll_status_data_container" style="display:none">
+                    <div class="sdpi-item">
+                        <div class="sdpi-item-label">Status URL</div>
+                        <input class="sdpi-item-value" type="text" id="poll_status_data_url">
+                    </div>
+                    <div class="sdpi-item">
+                        <div class="sdpi-item-label">HTTP Method</div>
+                        <select class="sdpi-item-value select" id="poll_status_data_method">
+                            <option value="GET" selected>GET</option>
+                            <option value="POST">POST</option>
+                            <option value="HEAD">HEAD</option>
+                            <option value="PUT">PUT</option>
+                            <option value="PATCH">PATCH</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                    </div>
+                    <div class="sdpi-item">
+                        <div class="sdpi-item-label">Poll Frequency</div>
+                        <input class="sdpi-item-value max10" type="text" id="poll_status_data_frequency" pattern="\d+" value="15"> seconds
+                    </div>
+                    <div class="sdpi-item">
+                        <div style="width: 15px;"></div>
+                        <div class="sdpi-item-value">
+                            <div class="sdpi-item-child">
+                                <input id="poll_status_parse" type="checkbox">
+                                <label for="poll_status_data_parse" class="sdpi-item-label"><span></span>Parse a different field and value from response</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="poll_status_data_parse_container" style="display:none">
+                        <div class="sdpi-item">
+                            <div class="sdpi-item-label">JSON Path</div>
+                            <input class="sdpi-item-value" type="text" id="poll_status_data_parse_field">
+                        </div>
+                        <div class="sdpi-item">
+                            <div class="sdpi-item-label">Expected Value</div>
+                            <input class="sdpi-item-value" type="text" id="poll_status_data_parse_value">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="sdpi-item">

@@ -351,8 +351,14 @@ function showHideSettings() {
     d = document.getElementById('poll_status_container');
     d.style.display = settings.poll_status ? "" : "none";
 
+    d = document.getElementById('poll_status_data_container');
+    d.style.display = settings.poll_status_data ? "" : "none";
+
     d = document.getElementById('poll_status_parse_container');
     d.style.display = settings.poll_status_parse ? "" : "none";
+
+    d = document.getElementById('poll_status_data_parse_container');
+    d.style.display = settings.poll_status_data_parse ? "" : "none";
 }
 
 function localize(s) {
