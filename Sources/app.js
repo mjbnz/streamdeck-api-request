@@ -75,11 +75,11 @@ function APIRequest(jsonObj) {
         key_state = null;
 
     function restartPeriodicPoll() {
-        const frequency = settings.poll_status_frequency || 15;
+        const frequency = settings.poll_status_frequency || settings.poll_status_data_frequency || 15;
 
         destroy();
 
-        if (settings.advanced_settings && settings.poll_status) {
+        if (settings.advanced_settings && (settings.poll_status || settings.poll_status_data)) {
             sendRequest(do_status_poll = true);
 
             poll_timer = setInterval(function() {
@@ -95,18 +95,22 @@ function APIRequest(jsonObj) {
         }
 
         if (do_status_poll) {
-            if (!Boolean(settings.response_parse) || !Boolean(settings.poll_status)) return;
-            if (!settings.poll_status_url) return;
+            // We check the parent-child relationship between settings to skip early when not needed
+            //    (left-side: parsing for background && right-side: parsing for displaying data)
+            if (!Boolean(settings.response_parse) && !Boolean(settings.response_data)) return;
+            if (!Boolean(settings.poll_status)    && !Boolean(settings.poll_status_data)) return;
+            if (!settings.poll_status_url         && !settings.poll_status_data_url) return;
         }
 
         let url    = settings.request_url;
         let body   = undefined;
         let method = 'GET';
         if (settings.advanced_settings) {
-            if (do_status_poll) url = settings.poll_status_url;
+            if (do_status_poll) url = settings.poll_status_url ?? settings.poll_status_data_url;
             if (settings.request_parameters) {
-                body   = settings.request_body;
-                method = (do_status_poll ? settings.poll_status_method : settings.request_method) ?? method;
+                body        = settings.request_body;
+                poll_method = settings.poll_status_method ?? settings.poll_status_data_method;
+                method      = (do_status_poll ? poll_method : settings.request_method) ?? method;
             }
         }
 
@@ -172,38 +176,77 @@ function APIRequest(jsonObj) {
     }
 
     async function updateImage(resp, do_status_poll) {
-        if (!settings.advanced_settings || !settings.response_parse || !settings.image_matched || !settings.image_unmatched)
+        /*
+         * Making sure we run only in one of the 2 relevant cases:
+         *    (1) when asked to parse and match to define the background image
+         *    (2) when asked to parse and display the data from the response on the key
+         */
+
+        // Common / top-level options
+        if (!settings.advanced_settings || (!settings.response_parse && !settings.response_data))
+            return;
+
+        // Case 1 missing config detection
+        if (settings.response_parse && (!settings.image_matched || !settings.image_unmatched))
+            return;
+
+        // Case 2 missing config detection (could be commented if we decide that the background image is optional)
+        if (settings.response_data && !settings.background_image)
             return;
 
         let json, body;
         var new_key_state = key_state;
+        const want_data   = (settings.response_data) ? true : false;
+        const field_name  = (want_data) ? 'data' : 'parse';
 
         const prefix = (do_status_poll && settings.poll_status && settings.poll_status_parse) ? 'poll_status' : 'response';
-        const field  = Utils.getProp(settings, `${prefix}_parse_field`, undefined);
+        const field  = Utils.getProp(settings, `${prefix}_${field_name}_field`, undefined);
         const value  = Utils.getProp(settings, `${prefix}_parse_value`, undefined);
+        // The value will always be undef in Case 2...
 
-        if (field  !== undefined && value !== undefined) {
-            json = await resp.json();
-            new_key_state = (Utils.getProperty(json, field) == value);
-        } else if (field !== undefined) {
-            json = await resp.json();
-            new_key_state = !(['false', '0', '', 'undefined'].indexOf(String(Utils.getProperty(json, field)).toLowerCase().trim()) + 1);
-        } else if (value !== undefined) {
-            body = await resp.text();
-            new_key_state = body.includes(value);
+        if (want_data) {
+            if (field !== undefined) {
+                json = await resp.json();
+                new_key_state = Utils.getProperty(json, field);
+            } else {
+                new_key_state = '?????';
+            }
+        } else {
+            if (field  !== undefined && value !== undefined) {
+                json = await resp.json();
+                new_key_state = (Utils.getProperty(json, field) == value);
+            } else if (field !== undefined) {
+                json = await resp.json();
+                new_key_state = !(['false', '0', '', 'undefined'].indexOf(String(Utils.getProperty(json, field)).toLowerCase().trim()) + 1);
+            } else if (value !== undefined) {
+                body = await resp.text();
+                new_key_state = body.includes(value);
+            }
         }
 
         if (new_key_state == key_state) return;
 
         key_state = new_key_state;
 
-        path = key_state
-                    ? settings.image_matched
-                    : settings.image_unmatched;
+        // adapting the background image to the Case we are working for
+        if (want_data) {
+            path = settings.background_image;
+        } else {
+            path = key_state
+                        ? settings.image_matched
+                        : settings.image_unmatched;
+        }
 
         log('updateImage(): FILE:', path, 'JSON:', json, 'BODY:', body);
 
         Utils.loadImage(path, img => $SD.api.setImage(context, img));
+
+        // Defining the text that must be rendered over the image
+        if (want_data) {
+            var name = (settings.response_data_name) ? `${settings.response_data_name}\n\n` : '';
+            var unit = (settings.response_data_unit) ? ` ${settings.response_data_unit}` : '';
+            $SD.api.setTitle(context, `${name}${new_key_state}${unit}`, null);
+        }
 
         return resp;
     }

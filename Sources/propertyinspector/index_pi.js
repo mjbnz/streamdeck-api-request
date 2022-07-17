@@ -342,14 +342,23 @@ function showHideSettings() {
     d = document.getElementById('request_parameters_container');
     d.style.display = settings.request_parameters ? "" : "none";
 
+    d = document.getElementById('response_data_container');
+    d.style.display = settings.response_data ? "" : "none";
+
     d = document.getElementById('response_parse_container');
     d.style.display = settings.response_parse ? "" : "none";
 
     d = document.getElementById('poll_status_container');
     d.style.display = settings.poll_status ? "" : "none";
 
+    d = document.getElementById('poll_status_data_container');
+    d.style.display = settings.poll_status_data ? "" : "none";
+
     d = document.getElementById('poll_status_parse_container');
     d.style.display = settings.poll_status_parse ? "" : "none";
+
+    d = document.getElementById('poll_status_data_parse_container');
+    d.style.display = settings.poll_status_data_parse ? "" : "none";
 }
 
 function localize(s) {
