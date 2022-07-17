@@ -75,7 +75,7 @@ function APIRequest(jsonObj) {
         key_state = null;
 
     function restartPeriodicPoll() {
-        const frequency = settings.poll_status_frequency || 15;
+        const frequency = settings.poll_status_frequency || settings.poll_status_data_frequency || 15;
 
         destroy();
 
