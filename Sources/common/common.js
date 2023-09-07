@@ -988,6 +988,7 @@ const StreamDeck = (function () {
         var events = ELGEvents.eventEmitter();
 
         function connect (args) {
+            var self = this;
             inPort = args[0];
             inUUID = args[1];
             inMessageType = args[2];
@@ -1047,6 +1048,8 @@ const StreamDeck = (function () {
                 // Websocket is closed
                 var reason = WEBSOCKETERROR(evt);
                 console.warn('[STREAMDECK]***** WEBOCKET CLOSED **** reason:', reason);
+                // retry after delay
+                setTimeout(self.connect(args), 5000);
             };
 
             websocket.onmessage = function (evt) {
